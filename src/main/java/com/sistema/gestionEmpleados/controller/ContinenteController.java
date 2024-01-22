@@ -2,7 +2,10 @@ package com.sistema.gestionEmpleados.controller;
 
 import java.util.List;
 
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +18,19 @@ import com.sistema.gestionEmpleados.service.ContinenteService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 
+@Configuration
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/continentes")
 @Slf4j
 public class ContinenteController {
 
 	@Autowired
 	private ContinenteService continenteService;
+	
+	@Bean
+    GroupedOpenApi continentesApi() {
+		return GroupedOpenApi.builder().group("continentes").pathsToMatch("/continentes/**").build();
+	}
 	
 	@Operation(summary = "Lista de todos los continentes")
 	@GetMapping("listaContinentes")

@@ -2,7 +2,11 @@ package com.sistema.gestionEmpleados.controller;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +25,20 @@ import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 
+@Configuration
 @Tag(name = "EmpleadoController", description = "Controlador para gestionar empleados")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/empleados")
 @Slf4j
 public class EmpleadoController {
 
 	@Autowired
 	private EmpleadoService empleadoService;
+	
+	@Bean
+    GroupedOpenApi empleadosApi() {
+		return GroupedOpenApi.builder().group("empleados").pathsToMatch("/empleados/**").build();
+	}
 	
 	/*
 	 * listarEmpleados
