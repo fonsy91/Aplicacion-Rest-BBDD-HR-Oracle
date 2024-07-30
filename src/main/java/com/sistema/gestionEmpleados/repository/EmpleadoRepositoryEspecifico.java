@@ -7,8 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import com.sistema.gestionEmpleados.model.Empleado;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+
 @Repository
 public class EmpleadoRepositoryEspecifico {
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 	
 	private static JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
@@ -41,33 +48,7 @@ public class EmpleadoRepositoryEspecifico {
 		        rs.getInt("MANAGER_ID"),
 		        rs.getInt("DEPARTMENT_ID")
 		        
-		));
-	    
-		/*
-		consulta.append(" SELECT * FROM EMPLOYEES ");
-		consulta.append(" WHERE SUBSTR(PHONE_NUMBER, 1, 1) = '");
-		consulta.append(numero);
-		consulta.append("' ");
-		consulta.append(" AND SALARY < 10000 ");
-		consulta.append(" AND JOB_ID = '");
-		consulta.append(idJob);
-		consulta.append("' ");
-		
-		return jdbcTemplate.query(consulta.toString(), (rs, rowNum) -> new Empleado(
-				rs.getInt("EMPLOYEE_ID"),
-				rs.getString("FIRST_NAME"),
-				rs.getString("LAST_NAME"),
-				rs.getString("EMAIL"),
-				rs.getString("PHONE_NUMBER"),
-				rs.getDate("HIRE_DATE"),
-				rs.getString("JOB_ID"),
-				rs.getDouble("SALARY"),
-				rs.getDouble("COMMISSION_PCT"),
-				rs.getInt("MANAGER_ID"),
-				rs.getInt("DEPARTMENT_ID")   
-				)
-        );
-		*/  
+		));  
 	}
 	
 	
