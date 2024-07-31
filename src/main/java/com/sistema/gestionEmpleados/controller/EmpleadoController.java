@@ -146,5 +146,10 @@ public class EmpleadoController {
 	// http://localhost:8081/api/swagger-ui/index.html#/empleado-controller/listarEmpleados
 
 
+	@Operation(summary = "Nos dice en numero de departamentos que hay a partir del id_department")
+	@GetMapping("/numero-department/{numeroDepartment}")
+    public Integer obtenerNumeroDepartment(@PathVariable Integer numeroDepartment) {
+        return empleadoService.obtenerNumeroDepartment(numeroDepartment);
+    }
 	
 }

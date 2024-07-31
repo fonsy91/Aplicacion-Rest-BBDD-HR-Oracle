@@ -48,6 +48,15 @@ public class EmpleadoService {
 		return EmpleadoRepositoryEspecifico.empleadosEspecificos(numero, idJob);
 	}
 	
+	/*
+	 * obtenerNumeroDepartment: obtiene cuantos department hay con el numero pasado
+	 * params: numeroDepartment
+	 * return: Integer con cuantos departaments hay con ese numero
+	 */
+	public Integer obtenerNumeroDepartment(Integer numeroDepartment) {
+		return empleadoRepositoryEspecifico.obtenerNumeroDepartment(numeroDepartment);
+	}
+	
 	
 	
 	/*

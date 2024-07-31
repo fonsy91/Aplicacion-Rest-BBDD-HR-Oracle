@@ -1,7 +1,9 @@
 package com.sistema.gestionEmpleados.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +11,6 @@ import com.sistema.gestionEmpleados.model.Empleado;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 
 @Repository
 public class EmpleadoRepositoryEspecifico {
@@ -18,6 +19,9 @@ public class EmpleadoRepositoryEspecifico {
     private EntityManager entityManager;
 	
 	private static JdbcTemplate jdbcTemplate = new JdbcTemplate();
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplateExpecifico;
 
     public EmpleadoRepositoryEspecifico(JdbcTemplate jdbcTemplate) {
         EmpleadoRepositoryEspecifico.jdbcTemplate = jdbcTemplate;
@@ -76,6 +80,24 @@ public class EmpleadoRepositoryEspecifico {
 	        );
 		
 		return idEmplaedo;
+	}
+	
+	/*
+	 * obtenerNumeroDepartment: obtiene cuantos department hay con el numero pasado
+	 * params: numeroDepartment
+	 * return: Integer con cuantos departaments hay con ese numero
+	 */
+	public Integer obtenerNumeroDepartment(Integer numeroDepartment) {
+		
+		StringBuilder consulta = new StringBuilder();
+		ArrayList<Object> criteriosBusqueda = new ArrayList<>();
+		
+		consulta.append(" SELECT COUNT(1) FROM EMPLOYEES ");
+	    consulta.append(" WHERE DEPARTMENT_ID = ? ");
+
+	    criteriosBusqueda.add(numeroDepartment);
+	    
+	    return this.jdbcTemplateExpecifico.queryForObject(consulta.toString(), int.class, criteriosBusqueda.toArray());
 	}
 	
 }
