@@ -57,6 +57,24 @@ public class EmpleadoService {
 		return empleadoRepositoryEspecifico.obtenerNumeroDepartment(numeroDepartment);
 	}
 	
+	/*
+	 * obtenerEmpleados entre dos fechas de contratacion
+	 * params: fecha1
+	 * params: fecha2
+	 * return: List<Empleado>
+	 */
+	public List<Empleado> obtenerEmpleadosEntreDosFechas() {
+		
+		List<Empleado> result = null;
+		
+		// Validaciones de fechas
+		// Hacer uso de LibreriaFechasHoras
+		// Probar que se pasen las fechas en formato String (20040630) y convertirlo a (30/06/2004) y ya pasarlo a la SQL
+		// SQL: SELECT * FROM EMPLOYEES WHERE HIRE_DATE BETWEEN TO_DATE('17/06/2003', 'DD/MM/YYYY') AND TO_DATE('30/06/2003', 'DD/MM/YYYY');
+		
+		
+		return result;
+	}
 	
 	
 	/*
