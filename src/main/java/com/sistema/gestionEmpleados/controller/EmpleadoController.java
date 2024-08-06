@@ -1,5 +1,6 @@
 package com.sistema.gestionEmpleados.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sistema.gestionEmpleados.entity.EmpleadosEntity;
 import com.sistema.gestionEmpleados.model.Empleado;
 import com.sistema.gestionEmpleados.service.EmpleadoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 @Configuration
@@ -99,19 +105,19 @@ public class EmpleadoController {
 	
 	/*
 	 * 
-{
-  "employee_id": 210,
-  "first_name": "Carmen",
-  "last_name": "Sanz",
-  "email": "luis@gmail.com",
-  "phone_number": "619224610",
-  "hire_date": "2023-10-23T19:27:25.897Z",
-  "job_id": "MK_MAN",
-  "salary": 20000,
-  "commission_pct": 0.4,
-  "manager_id": 100,
-  "department_id": 90
-}
+		{
+		  "employee_id": 210,
+		  "first_name": "Carmen",
+		  "last_name": "Sanz",
+		  "email": "luis@gmail.com",
+		  "phone_number": "619224610",
+		  "hire_date": "2023-10-23T19:27:25.897Z",
+		  "job_id": "MK_MAN",
+		  "salary": 20000,
+		  "commission_pct": 0.4,
+		  "manager_id": 100,
+		  "department_id": 90
+		}
 	 */
 	
 	
@@ -151,5 +157,27 @@ public class EmpleadoController {
     public Integer obtenerNumeroDepartment(@PathVariable Integer numeroDepartment) {
         return empleadoService.obtenerNumeroDepartment(numeroDepartment);
     }
+	
+	/*
+	 * Datos de entrada ejemplo:
+	 * startDate: 2003/06/17
+	 * endDate: 2003/06/25
+	 */
+	@GetMapping("/empleadosEntreDosFechas")
+    @Operation(summary = "Nos dice los empleados que hay entre dos fechas")
+    public List<EmpleadosEntity> obtenerEmpleadosEntreDosFechas(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy/MM/dd") String fechaInicioStr,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy/MM/dd") String fechaFinStr) throws ParseException {
+
+        // Convertir las fechas de String (yyyy/MM/dd) a Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date fechaInicio = sdf.parse(fechaInicioStr);
+        Date fechaFin = sdf.parse(fechaFinStr);
+
+        return empleadoService.obtenerEmpleadosEntreDosFechas(fechaInicio, fechaFin);
+    }
+	
+	
+	
 	
 }

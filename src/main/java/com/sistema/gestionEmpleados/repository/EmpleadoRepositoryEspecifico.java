@@ -1,12 +1,14 @@
 package com.sistema.gestionEmpleados.repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.sistema.gestionEmpleados.entity.EmpleadosEntity;
 import com.sistema.gestionEmpleados.model.Empleado;
 
 import jakarta.persistence.EntityManager;
@@ -58,8 +60,6 @@ public class EmpleadoRepositoryEspecifico {
 	
 	public static int insertarEmpleado(Empleado empleado) {
 		
-		//StringBuilder consulta = new StringBuilder();
-		
 		String sql = "INSERT INTO EMPLOYEES (EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER " +
 					 " , HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID) " +
 					 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -99,5 +99,35 @@ public class EmpleadoRepositoryEspecifico {
 	    
 	    return this.jdbcTemplateExpecifico.queryForObject(consulta.toString(), int.class, criteriosBusqueda.toArray());
 	}
+	
+	/*
+	 * obtenerEmpleados entre dos fechas de contratacion
+	 * params: fecha1
+	 * params: fecha2
+	 * return: List<Empleado>
+	 */
+	public List<EmpleadosEntity> obtenerEmpleadosEntreDosFechas(String fechaInicio, String fechaFin){
+		
+		StringBuilder consulta = new StringBuilder();
+		ArrayList<Object> criteriosBusqueda = new ArrayList<>();
+		
+        consulta.append(" SELECT * FROM EMPLOYEES ");
+        consulta.append(" WHERE HIRE_DATE BETWEEN ? AND ? ");
+        
+        criteriosBusqueda.add(fechaInicio);
+        criteriosBusqueda.add(fechaFin);
+
+        // Ejecutar la consulta y devolver la lista de empleados
+        return jdbcTemplate.query(consulta.toString(), criteriosBusqueda.toArray(), new EmpleadosEntity());
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

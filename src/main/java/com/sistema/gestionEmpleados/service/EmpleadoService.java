@@ -1,16 +1,19 @@
 package com.sistema.gestionEmpleados.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistema.gestionEmpleados.entity.EmpleadosEntity;
 import com.sistema.gestionEmpleados.model.Empleado;
 import com.sistema.gestionEmpleados.repository.EmpleadoRepository;
 import com.sistema.gestionEmpleados.repository.EmpleadoRepositoryEspecifico;
 
 import jakarta.transaction.Transactional;
+import java.text.SimpleDateFormat;
 
 @Service
 @Transactional
@@ -63,18 +66,16 @@ public class EmpleadoService {
 	 * params: fecha2
 	 * return: List<Empleado>
 	 */
-	public List<Empleado> obtenerEmpleadosEntreDosFechas() {
-		
-		List<Empleado> result = null;
-		
-		// Validaciones de fechas
-		// Hacer uso de LibreriaFechasHoras
-		// Probar que se pasen las fechas en formato String (20040630) y convertirlo a (30/06/2004) y ya pasarlo a la SQL
-		// SQL: SELECT * FROM EMPLOYEES WHERE HIRE_DATE BETWEEN TO_DATE('17/06/2003', 'DD/MM/YYYY') AND TO_DATE('30/06/2003', 'DD/MM/YYYY');
-		
-		
-		return result;
-	}
+	public List<EmpleadosEntity> obtenerEmpleadosEntreDosFechas(Date fechaInicio, Date fechaFin) {
+
+        // Convertir las fechas a formato 'dd/MM/yy'
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        String fechaInicioStr = sdf.format(fechaInicio);
+        String fechaFinStr = sdf.format(fechaFin);
+
+        // Llamar al repositorio pasando las fechas en formato adecuado
+        return empleadoRepositoryEspecifico.obtenerEmpleadosEntreDosFechas(fechaInicioStr, fechaFinStr);
+    }
 	
 	
 	/*

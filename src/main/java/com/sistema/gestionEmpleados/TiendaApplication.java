@@ -9,6 +9,8 @@ public class TiendaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TiendaApplication.class, args);
 	}
+	
+	//Base de datos Oracle: nombre: HR
 
 	// https://github.com/YairMendoza95/crud-spring/blob/main/src/main/java/com/indra/bbva/model/EmployeeBean.java
 	//http://localhost:8081/
