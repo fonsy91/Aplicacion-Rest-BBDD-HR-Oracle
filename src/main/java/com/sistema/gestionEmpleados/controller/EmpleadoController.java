@@ -173,6 +173,8 @@ public class EmpleadoController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date fechaInicio = sdf.parse(fechaInicioStr);
         Date fechaFin = sdf.parse(fechaFinStr);
+        
+        // FALTA ARREGLAR LA SALIDA DE FECHAS DE MANERA CORRECTA POR EL SWAGGER ************************
 
         return empleadoService.obtenerEmpleadosEntreDosFechas(fechaInicio, fechaFin);
     }
